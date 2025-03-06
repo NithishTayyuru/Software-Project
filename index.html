@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventFlow - Modern Event Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">
+                <h1>EventFlow</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search events...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Discover</a>
+                <a href="#">My Events</a>
+                <a href="#">Create Event</a>
+            </div>
+            <div class="user-actions">
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">0</span>
+                </div>
+                <div class="user-profile">
+                    <img src="/api/placeholder/40/40" alt="User Avatar" id="user-avatar">
+                    <div class="user-dropdown">
+                        <a href="#">My Profile</a>
+                        <a href="#">Settings</a>
+                        <a href="#" id="logout-btn">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <h2>Discover Amazing Events</h2>
+                <p>Find and join exciting events happening around you</p>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="filters">
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="music">Music</option>
+                        <option value="tech">Technology</option>
+                        <option value="arts">Arts & Culture</option>
+                        <option value="food">Food & Drink</option>
+                        <option value="sports">Sports & Fitness</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="location-filter">Location</label>
+                    <select id="location-filter">
+                        <option value="all">All Locations</option>
+                        <option value="newyork">New York</option>
+                        <option value="losangeles">Los Angeles</option>
+                        <option value="chicago">Chicago</option>
+                        <option value="miami">Miami</option>
+                        <option value="seattle">Seattle</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Date</label>
+                    <input type="date" id="date-filter">
+                </div>
+                <button id="filter-btn">Apply Filters</button>
+            </section>
+
+            <!-- Recommended Events -->
+            <section class="recommended-events">
+                <h3>Recommended For You</h3>
+                <div class="events-grid" id="recommended-events-container">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Trending Events -->
+            <section class="trending-events">
+                <h3>Trending Now</h3>
+                <div class="events-grid" id="trending-events-container">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- All Events -->
+            <section class="all-events">
+                <h3>Browse All Events</h3>
+                <div class="events-grid" id="all-events-container">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+                <div class="pagination">
+                    <button id="prev-page"><i class="fas fa-chevron-left"></i></button>
+                    <span id="current-page">1</span>
+                    <button id="next-page"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Modals -->
+        <!-- Login Modal -->
+        <div class="modal" id="login-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div class="modal" id="register-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Create Account</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+            </div>
+        </div>
+
+        <!-- Event Details Modal -->
+        <div class="modal" id="event-details-modal">
+            <div class="modal-content modal-lg">
+                <span class="close-modal">&times;</span>
+                <div id="event-details-container">
+                    <!-- Event details will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Modal -->
+        <div class="modal" id="cart-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Your Cart</h2>
+                <div id="cart-items">
+                    <!-- Cart items will be populated by JavaScript -->
+                </div>
+                <div class="cart-total">
+                    <p>Total: <span id="cart-total-amount">$0.00</span></p>
+                </div>
+                <button id="checkout-btn">Checkout</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>EventFlow</h4>
+                    <p>Discover, join, and organize events with ease.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Email: info@eventflow.com</p>
+                    <p>Phone: (123) 456-7890</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Subscribe</h4>
+                    <form id="newsletter-form">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EventFlow. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Templates -->
+    <template id="event-card-template">
+        <div class="event-card">
+            <div class="event-image">
+                <img src="/api/placeholder/400/200" alt="Event Image">
+                <span class="event-category"></span>
+            </div>
+            <div class="event-details">
+                <div class="event-header">
+                    <h4 class="event-title"></h4>
+                    <span class="event-price"></span>
+                </div>
+                <p class="event-description"></p>
+                <div class="event-meta">
+                    <span class="event-date"><i class="far fa-calendar"></i> <span class="date-text"></span></span>
+                    <span class="event-location"><i class="fas fa-map-marker-alt"></i> <span class="location-text"></span></span>
+                </div>
+                <div class="event-actions">
+                    <button class="view-details-btn">View Details</button>
+                    <button class="add-to-cart-btn"><i class="fas fa-plus"></i> Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
